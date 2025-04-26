@@ -1,10 +1,17 @@
 from typing import Callable, Generator
 
 def generator_numbers(text: str):
-    for word in text.split():
-        try:
-            yield float(word)
-        except ValueError:
+    for i, word in enumerate(text.split()):
+        start = text.find(word)
+        end = start + len(word)
+
+        left_side = start > 0 and text[start - 1] == ' '
+        right_side = end < len(text) and text[end] == ' '
+        
+        if left_side and right_side:
+            try:
+                yield float(word)
+            except ValueError:
                 continue
 
 def sum_profit(text: str, func: Callable):
